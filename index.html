@@ -1,1 +1,169 @@
+index.html
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CaptchaEarn - Guadagna Online</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container { max-width: 800px; margin: 0 auto; }
+        .header {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .header h1 { color: #667eea; font-size: 3em; margin-bottom: 10px; }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .stat-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .stat-card h3 { color: #667eea; font-size: 2.5em; margin-bottom: 10px; }
+        .captcha-section {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .captcha-box {
+            background: #f5f5f5;
+            border: 3px solid #667eea;
+            padding: 40px;
+            margin: 20px 0;
+            font-size: 3em;
+            font-weight: bold;
+            letter-spacing: 10px;
+            border-radius: 10px;
+        }
+        input {
+            width: 100%;
+            max-width: 400px;
+            padding: 15px;
+            font-size: 1.5em;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            text-align: center;
+            letter-spacing: 8px;
+            margin: 20px 0;
+        }
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1em;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        .btn:hover { transform: translateY(-2px); }
+        .message {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: bold;
+            display: none;
+        }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💰 CaptchaEarn</h1>
+            <p>Risolvi CAPTCHA e guadagna!</p>
+        </div>
 
+        <div class="stats">
+            <div class="stat-card">
+                <h3 id="total">0</h3>
+                <p>CAPTCHA Risolti</p>
+            </div>
+            <div class="stat-card">
+                <h3 id="balance">€0.00</h3>
+                <p>Il Tuo Saldo</p>
+            </div>
+        </div>
+
+        <div class="captcha-section">
+            <h2>🔐 Risolvi il CAPTCHA</h2>
+            <div class="captcha-box" id="captcha">LOADING...</div>
+            <input type="text" id="input" placeholder="Inserisci codice" maxlength="6">
+            <br>
+            <button class="btn" onclick="verify()">✓ Verifica</button>
+            <button class="btn" onclick="newCaptcha()">🔄 Nuovo</button>
+            <div class="message" id="msg"></div>
+        </div>
+    </div>
+
+    <script>
+        let captcha = '', total = 0, balance = 0;
+        
+        function generate() {
+            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+            captcha = '';
+            for(let i=0; i<6; i++) captcha += chars[Math.floor(Math.random()*chars.length)];
+            return captcha;
+        }
+        
+        function newCaptcha() {
+            document.getElementById('captcha').textContent = generate();
+            document.getElementById('input').value = '';
+            document.getElementById('msg').style.display = 'none';
+        }
+        
+        function verify() {
+            const input = document.getElementById('input').value.toUpperCase();
+            const msg = document.getElementById('msg');
+            
+            if(!input) {
+                msg.textContent = '❌ Inserisci il codice!';
+                msg.className = 'message error';
+                msg.style.display = 'block';
+                return;
+            }
+            
+            if(input === captcha) {
+                total++;
+                balance += 0.01;
+                document.getElementById('total').textContent = total;
+                document.getElementById('balance').textContent = '€' + balance.toFixed(2);
+                msg.textContent = '✅ Corretto! +€0.01';
+                msg.className = 'message success';
+                msg.style.display = 'block';
+                setTimeout(newCaptcha, 1000);
+            } else {
+                msg.textContent = '❌ Errato! Riprova';
+                msg.className = 'message error';
+                msg.style.display = 'block';
+            }
+        }
+        
+        document.getElementById('input').addEventListener('keypress', e => {
+            if(e.key === 'Enter') verify();
+        });
+        
+        newCaptcha();
+    </script>
+</body>
+</html>
