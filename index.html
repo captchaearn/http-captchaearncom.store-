@@ -1,10 +1,24 @@
-index.html
 <!DOCTYPE html>
 <html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CaptchaEarn - Guadagna Online</title>
+    <title>CaptchaEarn - Guadagna Risolvendo CAPTCHA Online</title>
+    <meta name="description" content="Guadagna denaro reale risolvendo semplici CAPTCHA. Pagamenti immediati su PayPal. Inizia gratis!">
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2393744326431370"
+     crossorigin="anonymous"></script>
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX');
+    </script>
+    
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -13,7 +27,7 @@ index.html
             min-height: 100vh;
             padding: 20px;
         }
-        .container { max-width: 800px; margin: 0 auto; }
+        .container { max-width: 1000px; margin: 0 auto; }
         .header {
             background: white;
             padding: 40px;
@@ -23,6 +37,20 @@ index.html
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
         .header h1 { color: #667eea; font-size: 3em; margin-bottom: 10px; }
+        
+        /* AdSense Containers */
+        .adsense-box {
+            background: #f8f9fa;
+            border: 2px dashed #ddd;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 20px 0;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
         .stats {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -37,12 +65,31 @@ index.html
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
         .stat-card h3 { color: #667eea; font-size: 2.5em; margin-bottom: 10px; }
+        .progress-bar-container {
+            background: #e0e0e0;
+            border-radius: 10px;
+            height: 25px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+        .progress-bar {
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            height: 100%;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.8em;
+        }
         .captcha-section {
             background: white;
             padding: 40px;
             border-radius: 15px;
             text-align: center;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
         }
         .captcha-box {
             background: #f5f5f5;
@@ -53,6 +100,7 @@ index.html
             font-weight: bold;
             letter-spacing: 10px;
             border-radius: 10px;
+            user-select: none;
         }
         input {
             width: 100%;
@@ -74,8 +122,11 @@ index.html
             border-radius: 10px;
             cursor: pointer;
             margin: 10px;
+            transition: transform 0.2s;
         }
         .btn:hover { transform: translateY(-2px); }
+        .btn:disabled { background: #ccc; cursor: not-allowed; }
+        .btn-success { background: linear-gradient(135deg, #28a745 0%, #20c997 100%); }
         .message {
             margin-top: 20px;
             padding: 15px;
@@ -83,16 +134,61 @@ index.html
             font-weight: bold;
             display: none;
         }
-        .success { background: #d4edda; color: #155724; }
-        .error { background: #f8d7da; color: #721c24; }
+        .success { background: #d4edda; color: #155724; border: 2px solid #c3e6cb; }
+        .error { background: #f8d7da; color: #721c24; border: 2px solid #f5c6cb; }
+        .withdraw-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+        .withdraw-badge {
+            display: inline-block;
+            background: #28a745;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        footer {
+            text-align: center;
+            color: white;
+            padding: 30px 0;
+            margin-top: 50px;
+        }
+        footer a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
             <h1>💰 CaptchaEarn</h1>
-            <p>Risolvi CAPTCHA e guadagna!</p>
+            <p>Risolvi CAPTCHA e guadagna denaro reale!</p>
         </div>
+
+        <!-- AdSense Banner Top -->
+        <div class="adsense-box">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-2393744326431370"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
 
         <div class="stats">
             <div class="stat-card">
@@ -100,10 +196,34 @@ index.html
                 <p>CAPTCHA Risolti</p>
             </div>
             <div class="stat-card">
+                <h3><span id="daily">0</span>/<span id="limit">100</span></h3>
+                <p>CAPTCHA Oggi</p>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="dailyBar">0%</div>
+                </div>
+            </div>
+            <div class="stat-card">
                 <h3 id="balance">€0.00</h3>
                 <p>Il Tuo Saldo</p>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="withdrawBar">0%</div>
+                </div>
+                <p style="margin-top: 10px; font-size: 0.8em; color: #999;">Prelievo: €1.00</p>
             </div>
         </div>
+
+        <!-- AdSense Rectangle -->
+        <div class="adsense-box">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-2393744326431370"
+                 data-ad-slot="0987654321"
+                 data-ad-format="rectangle"
+                 data-full-width-responsive="true"></ins>
+        </div>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
 
         <div class="captcha-section">
             <h2>🔐 Risolvi il CAPTCHA</h2>
@@ -114,10 +234,58 @@ index.html
             <button class="btn" onclick="newCaptcha()">🔄 Nuovo</button>
             <div class="message" id="msg"></div>
         </div>
+
+        <!-- AdSense In-feed -->
+        <div class="adsense-box">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-format="fluid"
+                 data-ad-layout-key="-fb+5w+4e-db+86"
+                 data-ad-client="ca-pub-2393744326431370"
+                 data-ad-slot="1122334455"></ins>
+        </div>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+
+        <div class="withdraw-section">
+            <h3>💳 Prelievo Immediato <span class="withdraw-badge">⚡ INSTANT</span></h3>
+            <p style="text-align: center; margin: 20px 0;">Saldo: <strong id="withdrawBalance">€0.00</strong></p>
+            <div style="text-align: center;">
+                <input type="email" id="paypal" placeholder="Email PayPal" style="max-width: 400px; padding: 15px; border: 2px solid #ddd; border-radius: 10px; margin-bottom: 15px;">
+                <br>
+                <button class="btn btn-success" id="withdrawBtn" onclick="withdraw()" disabled>
+                    💰 Preleva su PayPal (min €1.00)
+                </button>
+            </div>
+        </div>
+
+        <!-- AdSense Bottom Banner -->
+        <div class="adsense-box">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-2393744326431370"
+                 data-ad-slot="5544332211"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+
+        <footer>
+            <p>&copy; 2024 CaptchaEarn - Tutti i diritti riservati</p>
+            <div style="margin-top: 15px;">
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Termini di Servizio</a>
+                <a href="mailto:support@captchaearn.com">Contatti</a>
+            </div>
+        </footer>
     </div>
 
     <script>
-        let captcha = '', total = 0, balance = 0;
+        let captcha = '', total = 0, daily = 0, balance = 0;
+        const RATE = 0.01, LIMIT = 100, MIN_WITHDRAW = 1.00;
         
         function generate() {
             const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
@@ -143,12 +311,19 @@ index.html
                 return;
             }
             
+            if(daily >= LIMIT) {
+                msg.textContent = '❌ Limite giornaliero raggiunto (100 CAPTCHA)!';
+                msg.className = 'message error';
+                msg.style.display = 'block';
+                return;
+            }
+            
             if(input === captcha) {
                 total++;
-                balance += 0.01;
-                document.getElementById('total').textContent = total;
-                document.getElementById('balance').textContent = '€' + balance.toFixed(2);
-                msg.textContent = '✅ Corretto! +€0.01';
+                daily++;
+                balance += RATE;
+                updateDisplay();
+                msg.textContent = '✅ Corretto! +€' + RATE.toFixed(2);
                 msg.className = 'message success';
                 msg.style.display = 'block';
                 setTimeout(newCaptcha, 1000);
@@ -157,6 +332,39 @@ index.html
                 msg.className = 'message error';
                 msg.style.display = 'block';
             }
+        }
+        
+        function updateDisplay() {
+            document.getElementById('total').textContent = total;
+            document.getElementById('daily').textContent = daily;
+            document.getElementById('balance').textContent = '€' + balance.toFixed(2);
+            document.getElementById('withdrawBalance').textContent = '€' + balance.toFixed(2);
+            
+            const dailyPct = (daily / LIMIT) * 100;
+            document.getElementById('dailyBar').style.width = dailyPct + '%';
+            document.getElementById('dailyBar').textContent = Math.round(dailyPct) + '%';
+            
+            const withdrawPct = (balance / MIN_WITHDRAW) * 100;
+            document.getElementById('withdrawBar').style.width = Math.min(withdrawPct, 100) + '%';
+            document.getElementById('withdrawBar').textContent = Math.min(Math.round(withdrawPct), 100) + '%';
+            
+            document.getElementById('withdrawBtn').disabled = balance < MIN_WITHDRAW;
+        }
+        
+        function withdraw() {
+            const email = document.getElementById('paypal').value.trim();
+            if(!email) {
+                alert('❌ Inserisci email PayPal!');
+                return;
+            }
+            if(balance < MIN_WITHDRAW) {
+                alert('❌ Saldo insufficiente! Minimo €1.00');
+                return;
+            }
+            alert('🎉 Prelievo di €' + balance.toFixed(2) + ' inviato a ' + email + '!\n\n⚡ Trasferimento IMMEDIATO su PayPal!');
+            balance = 0;
+            updateDisplay();
+            document.getElementById('paypal').value = '';
         }
         
         document.getElementById('input').addEventListener('keypress', e => {
